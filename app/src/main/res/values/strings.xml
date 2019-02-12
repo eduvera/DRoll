@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">TimedDiceRoller</string>
     <string name="action_settings">Settings</string>
+    <string name="turn">TURN</string>
+    <string name="total">TOTAL</string>
+    <string name="timeDef">00:00:00</string>
+    <string name="dice_faces_num">Number of faces</string>
 </resources>
