@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,16 +18,18 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
-    int MAX_DICES = 10;
-    int MAX_DICES_VAL = 100;
+    int MAX_DICES = 20;
+    //int MAX_DICES_VAL = 100;
     int [] DICES_OPTIONS = {4, 6, 8, 10, 12, 20, 30, 100};
-    String[] DICES_OPT_STR = {"4 Caras", "6 Caras", "8 Caras", "10 Caras"};
+    String[] DICES_OPT_STR = {"4 Caras", "6 Caras", "8 Caras", "10 Caras", "12 Caras"
+    , "20 Caras", "30 Caras", "100 Caras"};
 
     ArrayList<Dice> DICES;
     CountDownTimer countDownTimer;
     TextView timerTextView, turnTextView;
     int _turn;
 
+    private RecyclerAdapter diceAdapter;
 
 
     @Override
@@ -52,6 +55,23 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //Dice Array init
+        DICES = new ArrayList<>();
+
+        //RecyclerInit
+        //Recycler
+        RecyclerView diceRecyclerView = findViewById(R.id.recyclerView);
+        diceRecyclerView.setHasFixedSize(true);
+
+        //LayoutManager
+        RecyclerView.LayoutManager diceLayoutManager = new GridAutoFitLayoutManager(this,200);
+        diceRecyclerView.setLayoutManager(diceLayoutManager);
+
+        //Adapter
+        diceAdapter = new RecyclerAdapter(DICES, R.layout.dice_layout);
+        diceRecyclerView.setAdapter(diceAdapter);
+
+        //FloatingActionButton
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,14 +79,12 @@ public class MainActivity extends AppCompatActivity {
                 countDownTimer.start();
                 _turn++;
                 updateTurn();
-
                 for(int i = 0; i < DICES.size(); i++) DICES.get(i).roll();
-
+                diceAdapter.notifyDataSetChanged();
                 updateTotal();
             }
         });
 
-        DICES = new ArrayList<>();
 
     }
 
@@ -108,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateTurn(){
-
         turnTextView = findViewById(R.id.turnTextView);
         turnTextView.setText(String.format("Turn: %s", String.valueOf(_turn)));
     }
@@ -122,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (DICES.size() < MAX_DICES) DICES.add(new Dice(DICES_OPTIONS[which]));
                 Toast.makeText(getApplicationContext(),DICES_OPT_STR[which],Toast.LENGTH_LONG).show();
+                diceAdapter.notifyDataSetChanged();
             }
         });
 

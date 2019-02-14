@@ -18,7 +18,7 @@ public class Dice {
         VALUE = random.nextInt(FACES) + 1;
     }
 
-    public int getFACES() {
+    int getFACES() {
         return FACES;
     }
 
