@@ -13,6 +13,10 @@ public class Dice {
     Dice(int faces){
         this.FACES = faces;
     }
+    Dice(int FACES,int VALUE){
+        this.FACES = FACES;
+        this.VALUE = VALUE;
+    }
 
     void roll(){
         VALUE = random.nextInt(FACES) + 1;

@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/timerLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
@@ -23,6 +23,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="setCountDownTimer"
             android:text="@string/timeDef"
             android:textSize="36sp"
             app:autoSizeMaxTextSize="40sp" />
