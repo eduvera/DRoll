@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<Dice> dataSet;
     private int resource;
+    private static ClickListener clickListener;
 
     RecyclerAdapter(ArrayList<Dice> dataSet, int resource) {
         this.dataSet = dataSet;
@@ -29,8 +30,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.diceFaces.setText(String.valueOf(dataSet.get(i).getFACES()));
-        viewHolder.roll.setText(String.format("Roll: %s", String.valueOf(dataSet.get(i).getVALUE())));
+        viewHolder.diceFaces.setText(String.valueOf(dataSet.get(i).getFaces()));
+        viewHolder.roll.setText(String.format("Roll: %s", String.valueOf(dataSet.get(i).getValue())));
     }
 
     @Override
@@ -38,7 +39,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return dataSet.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+    void setOnItemClickListener(ClickListener clickListener){
+        RecyclerAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener{
+        void onItemClick(int position, View view);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
         TextView diceFaces;
         TextView roll;
@@ -46,6 +57,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             diceFaces = itemView.findViewById(R.id.diceFace);
             roll = itemView.findViewById(R.id.diceVal);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(),view);
+        }
+
+
     }
 }

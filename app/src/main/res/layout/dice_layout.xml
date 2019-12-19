@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_margin="0dp"
-            android:text="@string/roll" />
+            android:text="@string/roll"
+            android:textSize="24sp" />
     </android.support.v7.widget.CardView>
 </LinearLayout>
