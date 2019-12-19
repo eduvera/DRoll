@@ -3,38 +3,49 @@ package com.viedmapp.timeddiceroller;
 import java.util.Random;
 
 public class Dice {
-    private int FACES;
-    private int VALUE;
-    private Random random = new Random();
+    private int faces;
+    private int value;
 
-    public Dice(){
-        this.FACES = 6;
-    }
-    Dice(int faces){
-        this.FACES = faces;
-    }
-    Dice(int FACES,int VALUE){
-        this.FACES = FACES;
-        this.VALUE = VALUE;
+
+    private int modifier;
+    private static Random random = new Random();
+
+    Dice(int faces) {
+        this.faces = faces;
     }
 
-    void roll(){
-        VALUE = random.nextInt(FACES) + 1;
+    Dice(int faces, int value) {
+        this.faces = faces;
+        this.value = value;
     }
 
-    int getFACES() {
-        return FACES;
+    void roll() {
+        random.setSeed(random.nextLong());
+        value = random.nextInt(faces) + 1;
     }
 
-    public void setFACES(int FACES) {
-        this.FACES = FACES;
+    int getFaces() {
+        return faces;
     }
 
-    int getVALUE() {
-        return VALUE;
+    public void setFaces(int faces) {
+        this.faces = faces;
     }
 
-    public void setVALUE(int VALUE) {
-        this.VALUE = VALUE;
+    int getValue() {
+        return value + getModifier();
     }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    int getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(int modifier) {
+        this.modifier = modifier;
+    }
+
 }
